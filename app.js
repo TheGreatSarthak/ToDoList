@@ -13,7 +13,7 @@ app.use(express.static("public"));
 
 main().catch((err) => console.log(err));
 
-mongoose.connect("mongodb+srv://sarthak2232:SIrQ9rZEBiOWLcaM@cluster0.j87obzj.mongodb.net/toDoListDB");
+mongoose.connect(process.env.MongoDB);
 
 async function main() {
   try {
