@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
@@ -82,18 +83,19 @@ async function main() {
     });
     app.post("/delete", async function (req, res) {
       const checkedItemId = req.body.check;
-      const listName=req.body.listName;
+      const listName = req.body.listName;
       // console.log(checkedItemId);
       // console.log(listName);
-      if(listName==='Today'){
+      if (listName === "Today") {
         await Item.deleteOne({ name: checkedItemId });
         res.redirect("/");
       } else {
-        await List.findOneAndUpdate({name: listName},{$pull: {items: {name: checkedItemId}}});
+        await List.findOneAndUpdate(
+          { name: listName },
+          { $pull: { items: { name: checkedItemId } } }
+        );
         res.redirect("/" + listName);
       }
-      
-      
     });
     app.get("/:customListName", async function (req, res) {
       const listRouteName = _.capitalize(req.params.customListName);
